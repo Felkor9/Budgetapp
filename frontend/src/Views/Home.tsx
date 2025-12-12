@@ -38,6 +38,7 @@ function Home() {
 				<form data-cy="form" action="" className="flex flex-col mt-20">
 					<label htmlFor="email">Email</label>
 					<input
+						data-cy="email"
 						id="email"
 						autoComplete="true"
 						value={email}
@@ -50,6 +51,7 @@ function Home() {
 						Password
 					</label>
 					<input
+						data-cy="password"
 						id="password"
 						autoComplete="true"
 						value={password}

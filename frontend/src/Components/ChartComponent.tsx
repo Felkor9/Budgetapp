@@ -74,5 +74,5 @@ export function ChartComponent() {
 		},
 	};
 
-	return <Doughnut data={data} options={options} />;
+	return <Doughnut data-cy="chart-component" data={data} options={options} />;
 }

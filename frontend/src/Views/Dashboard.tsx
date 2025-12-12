@@ -130,7 +130,9 @@ function Dashboard() {
 					</div>
 					<h1 className="font-bold text-xl">{totalLeft}:-</h1>
 				</div>
-				<div className=" flex items-center justify-center md:w-[400px] lg:w-[500px] xl:w-[600px] 2xl:w-[700px] bg-white p-3 rounded-lg">
+				<div
+					data-cy="chart-div"
+					className=" flex items-center justify-center md:w-[400px] lg:w-[500px] xl:w-[600px] 2xl:w-[700px] bg-white p-3 rounded-lg">
 					<ChartComponent />
 				</div>
 				<div className="w-full p-3 bg-white rounded-lg flex flex-col items-center justify-center gap-3 mt-5">
@@ -138,6 +140,7 @@ function Dashboard() {
 						<p>Actions</p>
 					</div>
 					<button
+						data-cy="add-btn"
 						className="border p-3 shadow-lg transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 rounded-lg bg-blue-500 text-white w-[300px]"
 						onClick={() => setIsAddTransactionOpen(true)}>
 						Lägg till ny transaction
@@ -168,6 +171,7 @@ function Dashboard() {
 							</label>
 							<input
 								id="desc"
+								data-cy="desc-input"
 								type="text"
 								value={desc}
 								onChange={(e) => setDesc(e.target.value)}
@@ -177,6 +181,7 @@ function Dashboard() {
 								Kostnad:
 							</label>
 							<input
+								data-cy="amount-input"
 								placeholder="SEK"
 								id="amount"
 								type="number | text"
@@ -190,6 +195,7 @@ function Dashboard() {
 										<div key={c.id} className=" flex items-center justify-center">
 											<label className="flex items-center gap-2">
 												<input
+													data-cy="category-checkbox"
 													onChange={(e) => setCategoryId(Number(e.target.value))}
 													className="p-3"
 													type="checkbox"
@@ -201,6 +207,7 @@ function Dashboard() {
 									))}
 							</div>
 							<button
+								data-cy="add-transaction-btn"
 								className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-[300px]"
 								onClick={() => handleAddTransaction()}>
 								Lägg till
