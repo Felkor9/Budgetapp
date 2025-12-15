@@ -3,7 +3,7 @@ import { MemoryRouter } from "react-router-dom";
 import GlobalContext from "../../src/GlobalContext.ts";
 
 describe("Home.cy.tsx", () => {
-	it("playground", () => {
+	it("Testar att logga in en användare", () => {
 		cy.mount(
 			<MemoryRouter>
 				<GlobalContext.Provider

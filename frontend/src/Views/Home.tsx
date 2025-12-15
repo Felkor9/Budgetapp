@@ -33,7 +33,7 @@ function Home() {
 
 	return (
 		<>
-			<div className="bg-white-50 h-[100vh] flex items-center justify-start flex-col bg-blue-50">
+			<div className="bg-white-50 h-screen flex items-center justify-start flex-col bg-blue-50">
 				<h1 className="text-xl font-bold mt-20">Welcome</h1>
 				<form data-cy="form" action="" className="flex flex-col mt-20">
 					<label htmlFor="email">Email</label>
@@ -69,7 +69,7 @@ function Home() {
 					</p>
 					<button
 						data-cy="login-button"
-						className="border-1 mt-7 bg-black text-white p-3 w-[60%] self-center rounded-lg"
+						className="border mt-7 bg-black text-white p-3 w-[60%] self-center rounded-lg"
 						onClick={handleLogin}>
 						Log in
 					</button>
