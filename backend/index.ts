@@ -26,6 +26,10 @@ interface User {
   password: string;
 }
 
+interface Settings {
+  salary: number;
+  user_id: number
+}
 app.post<User>('/api/create', async (req, res) => {
   const { name, email, password } = req.body
 
@@ -70,14 +74,19 @@ app.get('/api/users', async (req, res) => {
     console.log(results);
 })
 
-app.get('/api/settings', async (req, res) => {
-    const [results] = await database.query('SELECT * FROM settings_table;')
+app.get<Settings>('/api/settings', async (req, res) => {
+  const user_id = req.query.user_id
+  if (!user_id) {
+    return res.status(400).json({error: "user_id is required"})
+  }
+    const [results] = await database.query('SELECT * FROM settings_table Where user_id = ?;', [user_id])
     res.send(results)
 })
-app.post('/api/settings', async (req, res) => {
+
+app.post<Settings>('/api/settings', async (req, res) => {
   const { user_id, salary } = req.body
-  const [result] = await database.query('INSERT INTO settings_table (user_id, currency, theme) VALUES (?, ?);', [user_id, salary])
-  res.send(result)
+   await database.query('UPDATE settings_table SET salary = ? WHERE user_id = ?', [salary, user_id])
+  res.send({salary})
 })
 
 app.get('/api/transactions', async (req, res) => {

@@ -1,9 +1,20 @@
 import AddNewSalary from "../../src/Components/AddNewSalary.tsx";
+import GlobalContext from "../../src/GlobalContext.ts";
 
 describe("addnewsalary.cy.tsx", () => {
 	it("Testning för newSalaryCompoonent", () => {
 		// mountar
-		cy.mount(<AddNewSalary />);
+		cy.mount(
+			<GlobalContext.Provider
+				value={{
+					loggedInUserId: "1",
+					setLoggedInUserId: () => {},
+					users: [],
+					setUsers: () => {},
+				}}>
+				<AddNewSalary />
+			</GlobalContext.Provider>
+		);
 
 		// //klickar på knappen för att öppna en modal
 		cy.get('[data-cy="add-salary-btn"]').click();
@@ -18,7 +29,7 @@ describe("addnewsalary.cy.tsx", () => {
 		cy.get('[data-cy="update-salary-btn"]').click();
 
 		// //tittar så att lön har uppdaterat sig
-		cy.get('[data-cy="salary-input"]').should("contain", "42000");
+		cy.get('[data-cy="salary"]').should("contain", "42000");
 
 		// // hämtar data och ser ifall den uppdaterats
 		cy.intercept({

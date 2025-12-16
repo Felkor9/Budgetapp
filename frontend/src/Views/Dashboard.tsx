@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { ChartComponent } from "../Components/ChartComponent";
 import { toast } from "react-toastify";
 import GlobalContext from "../GlobalContext";
+import AddNewSalary from "../Components/AddNewSalary";
 
 interface Transaction {
 	id: number;
@@ -39,7 +40,7 @@ function Dashboard() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const settingsRes = await fetch("/api/settings");
+				const settingsRes = await fetch(`api/settings?user_id=${loggedInUserId}`);
 				const settingsData: Settings[] = await settingsRes.json();
 				const initialSalary = settingsData[0]?.salary || 0;
 				setSalary(initialSalary);
@@ -150,9 +151,12 @@ function Dashboard() {
 						onClick={() => setIsAddCategoryOpen(true)}>
 						Lägg till ny kategori
 					</button>
-					<button className="border p-3 shadow-lg transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 rounded-lg bg-blue-500 text-white w-[300px]">
+					<button
+						className="border p-3 shadow-lg transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 rounded-lg bg-gray-500/50 text-white w-[300px]"
+						disabled>
 						Lägg till ny budget
 					</button>
+					<AddNewSalary />
 				</div>
 			</div>
 			{isAddTransactionOpen && (
