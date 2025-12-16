@@ -77,13 +77,18 @@ app.get('/api/users', async (req, res) => {
 app.get<Settings>('/api/settings', async (req, res) => {
   const user_id = req.query.user_id
   if (!user_id) {
-    return res.status(400).json({error: "user_id is required"})
+    return res.status(400).json({ error: "user_id is required" })
   }
-    const [results] = await database.query('SELECT * FROM settings_table Where user_id = ?;', [user_id])
-    res.send(results)
+  try {
+    const [results] = await database.query('SELECT * FROM settings_table WHERE user_id = ? ', [user_id])
+    res.json(results)
+
+  } catch (err) {
+    console.log(err)
+  }
 })
 
-app.post<Settings>('/api/settings', async (req, res) => {
+app.post<Settings>('/api/salary', async (req, res) => {
   const { user_id, salary } = req.body
    await database.query('UPDATE settings_table SET salary = ? WHERE user_id = ?', [salary, user_id])
   res.send({salary})

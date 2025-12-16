@@ -40,13 +40,19 @@ function Dashboard() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const settingsRes = await fetch(`api/settings?user_id=${loggedInUserId}`);
-				const settingsData: Settings[] = await settingsRes.json();
-				const initialSalary = settingsData[0]?.salary || 0;
-				setSalary(initialSalary);
+				await fetch(`/api/settings?user_id=${loggedInUserId}`)
+					.then((response) => response.json())
+					.then((data: Settings[]) => {
+						console.log(data);
+						const initialSalary = data[0]?.salary || 0;
+						setSalary(initialSalary);
+					});
 
 				fetch(`/api/transactions?user_id=${loggedInUserId}`)
-					.then((res) => res.json())
+					.then((res) => {
+						res.json();
+					})
+
 					.then((data) => {
 						if (Array.isArray(data)) {
 							setTransactions(data);
@@ -57,21 +63,22 @@ function Dashboard() {
 					.catch(() => {
 						setTransactions([]);
 					});
-			} catch (error) {
-				console.error("Error fetching data:", error);
+
+				fetch(`/api/categories?user_id=${loggedInUserId}`)
+					.then((res) => res.json())
+					.then((data) => {
+						setCategories(data);
+					})
+					.catch(() => {
+						toast.error("Kunde inte lädda kategorier");
+					});
+			} catch (err) {
+				console.error("Error:", err);
 			}
-			fetch(`/api/categories?user_id=${loggedInUserId}`)
-				.then((res) => res.json())
-				.then((data) => {
-					setCategories(data);
-				})
-				.catch(() => {
-					toast.error("Kunde inte lädda kategorier");
-				});
 		};
 
 		fetchData();
-	}, []);
+	}, [loggedInUserId]);
 
 	const handleAddTransaction = async () => {
 		try {
@@ -152,7 +159,7 @@ function Dashboard() {
 						Lägg till ny kategori
 					</button>
 					<button
-						className="border p-3 shadow-lg transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 rounded-lg bg-gray-500/50 text-white w-[300px]"
+						className="border p-3 shadow-lg transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 rounded-lg bg-gray-500/60 text-white w-[300px]"
 						disabled>
 						Lägg till ny budget
 					</button>

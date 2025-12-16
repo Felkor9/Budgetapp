@@ -28,7 +28,7 @@ function AddNewSalary() {
 
 	const handleUpdate = async () => {
 		try {
-			const response = await fetch(`/api/settings`, {
+			const response = await fetch(`/api/salary`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
