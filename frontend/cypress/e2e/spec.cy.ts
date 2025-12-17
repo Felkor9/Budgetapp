@@ -4,8 +4,6 @@ describe('budgetapp', () => {
   cy.visit('http://localhost:5173/')
   })
 
-
-
   it('Sidan laddas, välkommen visas och logga in är det första man möts av', () => {
     cy.contains('Welcome')
     cy.get(`[data-cy="form"]`).should('exist')
@@ -54,7 +52,7 @@ describe('budgetapp', () => {
       .and("contain", "Login failed");
   });
 
-  it('Jag har inget konto, jag skapat ett', () => {
+  it('Jag har inget konto, jag skapar ett', () => {
     cy.get('[data-cy="create-btn"]').click()
     cy.get('[data-cy="create-name"]').type('Vanja')
     cy.get('[data-cy="create-email"]').type('Vanja')

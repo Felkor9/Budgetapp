@@ -53,10 +53,10 @@ function Dashboard() {
 					.then((data) => {
 						if (Array.isArray(data)) {
 							setTransactions(data);
-							console.log("trans", data);
+							console.log("transaktion", data);
 						} else {
 							setTransactions([]);
-							console.log("hej");
+							console.log("Detta är ingen array");
 						}
 					})
 					.catch(() => {
@@ -132,6 +132,7 @@ function Dashboard() {
 	return (
 		<>
 			<div className="bg-blue-200 flex flex-col items-center justify-start p-3 min-h-[100vh]">
+				<h1 className="self-start ">Kvar att spendera denna månad:</h1>
 				<div className="w-full p-3 bg-white rounded-lg flex items-center justify-start gap-3 mb-5">
 					<div className=" flex items-center justify-center w-[4	0px] bg-blue-900/60 h-[40px] rounded-full text-white p-4">
 						<h1 className="text-white text-xl font-bold">SEK: </h1>

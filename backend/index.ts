@@ -19,6 +19,10 @@ interface Users extends RowDataPacket {
   name: string,
   email: number
 }
+interface Settings {
+  salary: number;
+  user_id: number
+}
 
 interface User {
   id: number,
@@ -26,10 +30,6 @@ interface User {
   password: string;
 }
 
-interface Settings {
-  salary: number;
-  user_id: number
-}
 app.post<User>('/api/create', async (req, res) => {
   const { name, email, password } = req.body
 

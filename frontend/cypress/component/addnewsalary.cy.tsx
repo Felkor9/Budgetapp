@@ -12,7 +12,7 @@ describe("addnewsalary.cy.tsx", () => {
 					users: [],
 					setUsers: () => {},
 				}}>
-				<AddNewSalary />
+				<AddNewSalary onSalaryUpdated={() => {}} />
 			</GlobalContext.Provider>
 		);
 
@@ -29,7 +29,7 @@ describe("addnewsalary.cy.tsx", () => {
 		cy.get('[data-cy="update-salary-btn"]').click();
 
 		// //tittar så att lön har uppdaterat sig
-		cy.get('[data-cy="salary"]').should("contain", "42000");
+		cy.get('[data-cy="salary-container"]').should("not.exist");
 
 		// // hämtar data och ser ifall den uppdaterats
 		cy.intercept({

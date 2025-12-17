@@ -9,6 +9,7 @@ function NavBar() {
 	function handleMenu() {
 		setIsMenuVisible(!isMenuVisible);
 	}
+	const [name, setName] = useState("");
 
 	const { loggedInUserId, setLoggedInUserId } = useContext(GlobalContext);
 
@@ -20,6 +21,10 @@ function NavBar() {
 		fetch(`/api/users?user_id=${loggedInUserId}`)
 			.then((res) => res.json())
 			.then((data) => {
+				setName(data[Number(loggedInUserId) - 1].name);
+				console.log("ID", Number(loggedInUserId) - 1);
+				console.log(data);
+
 				console.log("Fetched user data:", data);
 			});
 	}, [loggedInUserId]);
@@ -37,10 +42,10 @@ function NavBar() {
 						/>
 					</div>
 					<div className="flex-1 flex items-center justify-center">
-						<h1>My budget app Inloggad: {loggedInUserId}</h1>
+						<h1>My budget app</h1>
 					</div>
-					<div className="flex items-center justify-between text-black text-sm flex-row ">
-						<img src="/logo.svg" alt="Logo" width={30} className="" />
+					<div className="flex items-center justify-between flex-row ">
+						<img src="/logo.svg" alt="Logo" width={30} />
 					</div>
 				</div>
 
@@ -51,8 +56,11 @@ function NavBar() {
  rounded-r-lg `}
 					onMouseLeave={() => setIsMenuVisible(false)}>
 					<div className="flex justify-center items-center flex-col gap-3 h-40 mt-30">
-						<img src="./react.svg" width={100} alt="Profile" />
-						<h1 className="text-white text-xl">My budget app</h1>
+						<img src="/logo.svg" width={100} alt="Profile" />
+						<h1 className="text-white text-xl mt-2">My budget app</h1>
+					</div>
+					<div className="w-full flex items-center justify-center font-bold">
+						<h2 className="text-white">Inloggad som: {name}</h2>
 					</div>
 					<div className="flex flex-col items-start gap-5 mt-10 text-white h-full p-3">
 						<div className="w-full h-0.5  bg-white"></div>
@@ -61,7 +69,7 @@ function NavBar() {
 							<Link to="/">Home</Link>
 						</button>
 						<button className="hover:underline cursor-pointer">
-							<Link to={"/dashboard"}>My Budgets</Link>
+							<Link to={"/dashboard"}>Dashboard</Link>
 						</button>
 						<button className="hover:underline cursor-pointer">Contact</button>
 						{loggedInUserId != null && (
