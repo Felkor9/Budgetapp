@@ -37,6 +37,7 @@ function CreateUser() {
 				<form action="" className="flex flex-col mt-10 ">
 					<label htmlFor="name">Name</label>
 					<input
+						data-cy="create-name"
 						id="name"
 						autoComplete="true"
 						value={name}
@@ -49,6 +50,7 @@ function CreateUser() {
 						Email
 					</label>
 					<input
+						data-cy="create-email"
 						id="email"
 						autoComplete="true"
 						value={email}
@@ -61,6 +63,7 @@ function CreateUser() {
 						Password
 					</label>
 					<input
+						data-cy="create-password"
 						id="password"
 						autoComplete="true"
 						value={password}
@@ -72,7 +75,8 @@ function CreateUser() {
 
 					<button
 						className="border-1 mt-7 bg-black text-white p-3 w-[60%] self-center rounded-lg"
-						onClick={handleCreate}>
+						onClick={handleCreate}
+						data-cy="create-new-btn">
 						Skapa konto
 					</button>
 					<p className="mt-4 self-center">

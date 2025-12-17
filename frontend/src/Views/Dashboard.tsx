@@ -49,15 +49,14 @@ function Dashboard() {
 					});
 
 				fetch(`/api/transactions?user_id=${loggedInUserId}`)
-					.then((res) => {
-						res.json();
-					})
-
+					.then((res) => res.json())
 					.then((data) => {
 						if (Array.isArray(data)) {
 							setTransactions(data);
+							console.log("trans", data);
 						} else {
 							setTransactions([]);
+							console.log("hej");
 						}
 					})
 					.catch(() => {
@@ -80,8 +79,9 @@ function Dashboard() {
 		fetchData();
 	}, [loggedInUserId]);
 
-	const handleAddTransaction = async () => {
+	const handleAddTransaction = async (e: React.FormEvent) => {
 		try {
+			e.preventDefault();
 			const res = await fetch("/api/transactions", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
@@ -94,7 +94,7 @@ function Dashboard() {
 			});
 
 			if (res.ok) {
-				toast.success("Transaction added successfully");
+				toast.success("Transaktionen har lagts till");
 				setIsAddTransactionOpen(false);
 			} else {
 				toast.error("Failed to add transaction");
@@ -116,7 +116,7 @@ function Dashboard() {
 				}),
 			});
 			if (res.ok) {
-				toast.success("Category added successfully");
+				toast.success("Kategori har lagts till");
 				setIsAddCategoryOpen(false);
 			}
 		} catch {
@@ -155,6 +155,7 @@ function Dashboard() {
 					</button>
 					<button
 						className="border p-3 shadow-lg transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 rounded-lg bg-blue-500 text-white w-[300px]"
+						data-cy="add-cat"
 						onClick={() => setIsAddCategoryOpen(true)}>
 						Lägg till ny kategori
 					</button>
@@ -163,7 +164,7 @@ function Dashboard() {
 						disabled>
 						Lägg till ny budget
 					</button>
-					<AddNewSalary />
+					<AddNewSalary onSalaryUpdated={setSalary} />
 				</div>
 			</div>
 			{isAddTransactionOpen && (
@@ -206,7 +207,7 @@ function Dashboard() {
 										<div key={c.id} className=" flex items-center justify-center">
 											<label className="flex items-center gap-2">
 												<input
-													data-cy="category-checkbox"
+													data-cy={`checkbox-${c.name}`}
 													onChange={(e) => setCategoryId(Number(e.target.value))}
 													className="p-3"
 													type="checkbox"
@@ -220,7 +221,7 @@ function Dashboard() {
 							<button
 								data-cy="add-transaction-btn"
 								className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-[300px]"
-								onClick={() => handleAddTransaction()}>
+								onClick={handleAddTransaction}>
 								Lägg till
 							</button>
 						</form>
@@ -242,6 +243,7 @@ function Dashboard() {
 								Namn på kategori:
 							</label>
 							<input
+								data-cy="cat-namn"
 								id="cat"
 								placeholder="Namn (Hälsa)"
 								type="text"
@@ -255,6 +257,7 @@ function Dashboard() {
 							<input
 								id="type"
 								placeholder="Typ"
+								data-cy="cat-type"
 								type="text"
 								value={type}
 								className="p-3 border-2 rounded-lg bg-white w-[300px]"
@@ -262,6 +265,7 @@ function Dashboard() {
 							/>
 							<div className="flex flex-wrap justify-center gap-4"></div>
 							<button
+								data-cy="cat-btn"
 								className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-[300px]"
 								onClick={() => handleAddCategory()}>
 								Lägg till

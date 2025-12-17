@@ -7,7 +7,11 @@ interface Settings {
 	user_id: number;
 }
 
-function AddNewSalary() {
+interface AddNewSalaryProps {
+	onSalaryUpdated: (salary: number) => void;
+}
+
+function AddNewSalary({ onSalaryUpdated }: AddNewSalaryProps) {
 	const [isAddSalaryVisible, setIsSalaryVisible] = useState(false);
 	const [salary, setSalary] = useState<number>(0);
 
@@ -39,7 +43,9 @@ function AddNewSalary() {
 
 			if (response.ok) {
 				setCurrentSalary(salary);
+				onSalaryUpdated(salary);
 				toast.success("Lön uppdaterad");
+				setIsSalaryVisible(false);
 			}
 		} catch {
 			toast.error("Kunde inte lägga till lön");
@@ -66,9 +72,9 @@ function AddNewSalary() {
 						<div className="flex items-center justify-center w-[4	0px] bg-blue-900/60 h-[40px] rounded-xl text-white p-5	">
 							<h2 className="text-xl">Uppdatera din lön</h2>
 						</div>
-						<p>Din nuvarande lön: {currentSalary}</p>
+						<p>Din nuvarande lön: {currentSalary} :-</p>
 
-						<p data-cy="salary">Min nya lön: {salary!}</p>
+						<p data-cy="salary">Min nya lön: {salary!} :-</p>
 						<input
 							data-cy="salary-input"
 							type="number"

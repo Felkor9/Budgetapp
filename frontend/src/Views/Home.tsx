@@ -33,7 +33,9 @@ function Home() {
 
 	return (
 		<>
-			<div className="bg-white-50 h-screen flex items-center justify-start flex-col bg-blue-50">
+			<div
+				data-cy="home-div"
+				className="bg-white-50 h-screen flex items-center justify-start flex-col bg-blue-50">
 				<h1 className="text-xl font-bold mt-20">Welcome</h1>
 				<form data-cy="form" action="" className="flex flex-col mt-20">
 					<label htmlFor="email">Email</label>
@@ -62,7 +64,7 @@ function Home() {
 					/>
 					<p className="self-center">
 						har du inget konto?
-						<Link className="text-blue-600 underline" to="/createuser">
+						<Link className="text-blue-600 underline" to="/createuser" data-cy="create-btn">
 							{" "}
 							Skapa Här
 						</Link>
