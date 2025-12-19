@@ -21,9 +21,10 @@ export function ChartComponent() {
 	useEffect(() => {
 		fetch(`/api/transactions?user_id=${loggedInUserId}`)
 			.then((res) => res.json())
-			.then((data) => {
+			.then((data: Transaction[]) => {
 				if (Array.isArray(data)) {
 					setTransactions(data);
+
 					// console.log(data);
 				} else {
 					setTransactions([]);
@@ -33,7 +34,7 @@ export function ChartComponent() {
 				console.error("Fetch error:", err);
 				setTransactions([]);
 			});
-	}, []);
+	}, [loggedInUserId]);
 
 	// const label = transactions.map((t) => t.description);
 	const labels = transactions.map((t) => t.description);

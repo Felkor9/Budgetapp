@@ -95,6 +95,7 @@ function Dashboard() {
 
 			if (res.ok) {
 				toast.success("Transaktionen har lagts till");
+
 				setIsAddTransactionOpen(false);
 			} else {
 				toast.error("Failed to add transaction");
@@ -117,6 +118,20 @@ function Dashboard() {
 			});
 			if (res.ok) {
 				toast.success("Kategori har lagts till");
+				fetch(`/api/transactions?user_id=${loggedInUserId}`)
+					.then((res) => res.json())
+					.then((data) => {
+						if (Array.isArray(data)) {
+							setTransactions(data);
+							console.log("transaktion", data);
+						} else {
+							setTransactions([]);
+							console.log("Detta är ingen array");
+						}
+					})
+					.catch(() => {
+						setTransactions([]);
+					});
 				setIsAddCategoryOpen(false);
 			}
 		} catch {
@@ -152,7 +167,7 @@ function Dashboard() {
 						data-cy="add-btn"
 						className="border p-3 shadow-lg transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 rounded-lg bg-blue-500 text-white w-[300px]"
 						onClick={() => setIsAddTransactionOpen(true)}>
-						Lägg till ny transaction
+						Lägg till ny transaktion
 					</button>
 					<button
 						className="border p-3 shadow-lg transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 rounded-lg bg-blue-500 text-white w-[300px]"

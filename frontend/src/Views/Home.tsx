@@ -22,7 +22,6 @@ function Home() {
 			if (response.ok) {
 				localStorage.setItem("loggedInUserId", data.user.id);
 				setLoggedInUserId(data.user.id);
-				//
 				navigate("/dashboard");
 			}
 		} catch (err) {

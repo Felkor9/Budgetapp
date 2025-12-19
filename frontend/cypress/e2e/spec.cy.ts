@@ -91,5 +91,18 @@ describe('budgetapp', () => {
     cy.task('clearCat')
   })
 
+  it('Kan uppdatera lön', () => {
+        cy.get('input[placeholder="Email"]').type('admin')
+    cy.get('input[placeholder="Password"]').type('admin')
+    cy.get(`[data-cy="login-button"]`).click()
+    cy.get('[data-cy="add-salary-btn"]').click()
+    cy.get('[data-cy="salary-input"]').type('20000')
+    cy.get('[data-cy="update-salary-btn"]').click()
+    cy.get(".Toastify__toast--success")
+       .should("be.visible")
+      .and("contain", "Lön uppdaterad")
+    cy.get('[data-cy="salary-container"]').should("not.exist")
+
+  })
 
   })
